@@ -37,7 +37,7 @@
     "player",
     "typescript"
   ],
-  "author": "Kieran Evans",
+  "author": "Kieran Evans <keyz182@gmail.com>",
   "license": "Apache",
   "bugs": {
     "url": "https://github.com/keyz182/ionic-pulldown/issues"
