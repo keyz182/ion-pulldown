@@ -25678,6 +25678,32 @@ ion-navbar.toolbar {
   min-height: calc(46px + env(safe-area-inset-bottom));
 }
 
+page-home .hidden {
+  opacity: 0;
+}
+
+page-home .hideMe {
+  /* Firefox */
+  -webkit-animation: cssAnimation 0.75s ease-out;
+  /* Safari and Chrome */
+  /* Opera */
+  animation: cssAnimation 0.75s ease-out;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+@keyframes cssAnimation {
+  to {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes cssAnimation {
+  to {
+    opacity: 0;
+  }
+}
+
 ion-pulldown-tab {
   top: -1px;
   z-index: 1000;

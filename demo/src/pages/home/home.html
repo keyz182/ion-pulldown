@@ -1,4 +1,13 @@
-<ion-pull-down (onMove)="onMove()" (onMoveDone)="onMoveDone()" [mainContent]="content" #pulldown>
+<ion-pull-down
+  (onInit)="Init()"
+  (onMoveStart)="MoveStart()"
+  (onMove)="Move()"
+  (onMoveDone)="MoveDone()"
+  (onCollapse)="Collapse()"
+  (onExpand)="Expand()"
+  (onMidPoint)="MidPoint()"
+  [mainContent]="content"
+  #pulldown>
   <ion-content style="height: 100%">
     <ion-card>
       <ion-card-header>
@@ -140,6 +149,27 @@
   </pre>
 
   <p>ToDo: Documentation and Configurability!</p>
+
+  <p>
+    <button ion-button icon-only (click)="pulldown.collapse()">
+      <ion-icon name="arrow-up"></ion-icon>
+    </button>
+    <button ion-button  (click)="pulldown.midPoint()">
+      Middle
+    </button>
+    <button ion-button icon-only (click)="pulldown.expand()">
+      <ion-icon name="arrow-down"></ion-icon>
+    </button>
+  </p>
+
+  <p id="onMoveStart" class="hidden hideMe">onMoveStart</p>
+  <p id="onMove" class="hidden hideMe">onMove</p>
+  <p id="onMoveDone" class="hidden hideMe">onMoveDone</p>
+  <p id="onInit" class="hidden hideMe">onInit</p>
+  <p id="onCollapse" class="hidden hideMe">onCollapse</p>
+  <p id="onExpand" class="hidden hideMe">onExpand</p>
+  <p id="onMidPoint" class="hidden hideMe">onMidPoint</p>
+
 </ion-content>
 
 <ion-footer>

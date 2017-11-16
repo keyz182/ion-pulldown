@@ -1,7 +1,7 @@
 {
   "name": "ion-pulldown",
   "description": "ion-pulldown for Angular 4 and Ionic 3",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "scripts": {
