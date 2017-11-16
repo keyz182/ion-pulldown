@@ -4,9 +4,10 @@ import 'rxjs/Rx';
 import { IonPulldownHeaderDirective } from './header-wrap';
 import { IonPulldownTabComponent } from './pulldown-tab';
 var IonPullDownComponent = (function () {
-    function IonPullDownComponent(platform, renderer) {
+    function IonPullDownComponent(platform, renderer, elRef) {
         this.platform = platform;
         this.renderer = renderer;
+        this.elRef = elRef;
         this.onInit = new EventEmitter();
         this.onMoveStart = new EventEmitter();
         this.onMove = new EventEmitter();
@@ -24,10 +25,14 @@ var IonPullDownComponent = (function () {
     IonPullDownComponent.prototype.ngOnInit = function () {
         var component = this;
         window.addEventListener("orientationchange", function () {
-            component.updateUI();
+            setTimeout(function () {
+                component.updateUI();
+            }, 100);
         });
         component.platform.resume.subscribe(function () {
-            component.updateUI();
+            setTimeout(function () {
+                component.updateUI();
+            }, 100);
         });
         var hammerOpts = {};
         if (navigator.userAgent.match(/Android/i)) {
@@ -78,8 +83,9 @@ var IonPullDownComponent = (function () {
                     break;
             }
         }
-        var hammer = new this.hammer(this.tabRef.nativeElement, hammerOpts);
-        hammer.get('pan').set({ threshold: 0 });
+        var hammer = new this.hammer(this.elRef.nativeElement, hammerOpts);
+        // let hammer = new this.hammer(this.tabRef.nativeElement, hammerOpts);
+        hammer.get('pan').set({ threshold: 2 });
         hammer.on('pan panstart panend pan-up pan-down', handler);
         this.updateUI(true);
     };
@@ -214,6 +220,7 @@ IonPullDownComponent.decorators = [
 IonPullDownComponent.ctorParameters = function () { return [
     { type: Platform, },
     { type: Renderer2, },
+    { type: ElementRef, },
 ]; };
 IonPullDownComponent.propDecorators = {
     'content': [{ type: ContentChild, args: [Content,] },],

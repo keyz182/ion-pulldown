@@ -131,9 +131,17 @@
   </ion-content>
 
   <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+    <ion-buttons start>
+      <button  ion-button icon-only outline>
+        <ion-icon name="contact"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-searchbar></ion-searchbar>
+    <ion-buttons end>
+      <button  ion-button icon-only #button2 (click)="buttonClick(button2)">
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-pull-down>
 

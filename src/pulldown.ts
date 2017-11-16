@@ -58,7 +58,7 @@ export class IonPullDownComponent implements OnInit {
 
     private hammer;
 
-    constructor(private platform: Platform, private renderer: Renderer2) {
+    constructor(private platform: Platform, private renderer: Renderer2, private elRef: ElementRef) {
         if (!window.hasOwnProperty('Hammer')) {
             throw new Error('Hammer.js not found at window.Hammer!');
         } else {
@@ -70,10 +70,14 @@ export class IonPullDownComponent implements OnInit {
         const component = this;
 
         window.addEventListener("orientationchange", () => {
-            component.updateUI();
+            setTimeout(()=>{
+                component.updateUI();
+            },100);
         });
         component.platform.resume.subscribe(() => {
-            component.updateUI();
+            setTimeout(()=>{
+                component.updateUI();
+            },100);
         });
 
         let hammerOpts = {};
@@ -134,9 +138,10 @@ export class IonPullDownComponent implements OnInit {
             }
         }
 
-        let hammer = new this.hammer(this.tabRef.nativeElement, hammerOpts);
+        let hammer = new this.hammer(this.elRef.nativeElement, hammerOpts);
+        // let hammer = new this.hammer(this.tabRef.nativeElement, hammerOpts);
 
-        hammer.get('pan').set({threshold: 0});
+        hammer.get('pan').set({threshold: 2});
 
         hammer.on('pan panstart panend pan-up pan-down', handler);
 
