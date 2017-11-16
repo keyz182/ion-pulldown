@@ -53,20 +53,60 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var HomePage = (function () {
-    function HomePage(navCtrl) {
+    function HomePage(navCtrl, renderer, elRef) {
         this.navCtrl = navCtrl;
+        this.renderer = renderer;
+        this.elRef = elRef;
     }
-    HomePage.prototype.onMove = function () {
+    HomePage.prototype.MoveStart = function () {
+        console.log('onMoveStart');
+        var el = this.elRef.nativeElement.querySelector('#onMoveStart');
+        this.fadeOut(el);
+    };
+    HomePage.prototype.Move = function () {
         console.log('onMove');
+        var el = this.elRef.nativeElement.querySelector('#onMove');
+        this.fadeOut(el);
     };
-    HomePage.prototype.onMoveDone = function () {
+    HomePage.prototype.MoveDone = function () {
         console.log('onMoveDone');
+        var el = this.elRef.nativeElement.querySelector('#onMoveDone');
+        this.fadeOut(el);
     };
+    HomePage.prototype.Init = function () {
+        console.log('onInit');
+        var el = this.elRef.nativeElement.querySelector('#onInit');
+        this.fadeOut(el);
+    };
+    HomePage.prototype.Collapse = function () {
+        console.log('onCollapse');
+        var el = this.elRef.nativeElement.querySelector('#onCollapse');
+        this.fadeOut(el);
+    };
+    HomePage.prototype.Expand = function () {
+        console.log('onExpand');
+        var el = this.elRef.nativeElement.querySelector('#onExpand');
+        this.fadeOut(el);
+    };
+    HomePage.prototype.MidPoint = function () {
+        console.log('onMidPoint');
+        var el = this.elRef.nativeElement.querySelector('#onMidPoint');
+        this.fadeOut(el);
+    };
+    HomePage.prototype.fadeOut = function (el) {
+        var clone = el.cloneNode(true);
+        clone.classList.remove('hidden');
+        el.parentNode.replaceChild(clone, el);
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('list'),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* List */])
+    ], HomePage.prototype, "list", void 0);
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"C:\Users\keyz\Code\ion-pulldown\demo\src\pages\home\home.html"*/`<ion-pull-down (onMove)="onMove()" (onMoveDone)="onMoveDone()" [mainContent]="content" #pulldown>\n  <ion-content style="height: 100%">\n    <ion-card>\n      <ion-card-header>\n        Header\n      </ion-card-header>\n      <ion-card-content>\n        The British use the term "header", but the American term "head-shot" the English simply refuse to adopt.\n      </ion-card-content>\n    </ion-card>\n    <ion-card>\n      <ion-card-header>\n        Explore Nearby\n      </ion-card-header>\n\n      <ion-list>\n        <button ion-item>\n          <ion-icon name="cart" item-left></ion-icon>\n          Shopping\n        </button>\n\n        <button ion-item>\n          <ion-icon name="medical" item-left></ion-icon>\n          Hospital\n        </button>\n\n        <button ion-item>\n          <ion-icon name="cafe" item-left></ion-icon>\n          Cafe\n        </button>\n\n        <button ion-item>\n          <ion-icon name="paw" item-left></ion-icon>\n          Dog Park\n        </button>\n\n        <button ion-item>\n          <ion-icon name="beer" item-left></ion-icon>\n          Pub\n        </button>\n\n        <button ion-item>\n          <ion-icon name="planet" item-left></ion-icon>\n          Space\n        </button>\n\n        <button ion-item>\n          <ion-icon name="cart" item-left></ion-icon>\n          Shopping\n        </button>\n\n        <button ion-item>\n          <ion-icon name="medical" item-left></ion-icon>\n          Hospital\n        </button>\n\n        <button ion-item>\n          <ion-icon name="cafe" item-left></ion-icon>\n          Cafe\n        </button>\n\n        <button ion-item>\n          <ion-icon name="paw" item-left></ion-icon>\n          Dog Park\n        </button>\n\n        <button ion-item>\n          <ion-icon name="beer" item-left></ion-icon>\n          Pub\n        </button>\n\n        <button ion-item>\n          <ion-icon name="planet" item-left></ion-icon>\n          Space\n        </button>\n\n        <button ion-item>\n          <ion-icon name="cart" item-left></ion-icon>\n          Shopping\n        </button>\n\n        <button ion-item>\n          <ion-icon name="medical" item-left></ion-icon>\n          Hospital\n        </button>\n\n        <button ion-item>\n          <ion-icon name="cafe" item-left></ion-icon>\n          Cafe\n        </button>\n\n        <button ion-item>\n          <ion-icon name="paw" item-left></ion-icon>\n          Dog Park\n        </button>\n\n        <button ion-item>\n          <ion-icon name="beer" item-left></ion-icon>\n          Pub\n        </button>\n\n        <button ion-item>\n          <ion-icon name="planet" item-left></ion-icon>\n          Space\n        </button>\n\n      </ion-list>\n    </ion-card>\n    <ion-list inset>\n\n      <ion-item>\n        <ion-label>Username</ion-label>\n        <ion-input type="text"></ion-input>\n      </ion-item>\n\n      <ion-item>\n        <ion-label>Password</ion-label>\n        <ion-input type="password"></ion-input>\n      </ion-item>\n\n    </ion-list>\n  </ion-content>\n\n  <ion-navbar>\n    <ion-title>\n      Ionic Blank\n    </ion-title>\n  </ion-navbar>\n</ion-pull-down>\n\n<ion-content padding #content>\n  <h1>ion-pulldown</h1>\n  ion-pulldown is an Ionic (2+) component providing a curtain style pull down header.\n\n  The header is draggable, and snaps to one of three positions; closed, half way, and fully open.\n\n  <p>Install with</p>\n  <pre>\n    npm install --save ion-pulldown\n  </pre>\n\n  <p>ToDo: Documentation and Configurability!</p>\n</ion-content>\n\n<ion-footer>\n  <ion-toolbar>\n    <ion-title>Footer</ion-title>\n  </ion-toolbar>\n</ion-footer>\n`/*ion-inline-end:"C:\Users\keyz\Code\ion-pulldown\demo\src\pages\home\home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"C:\Users\keyz\Code\ion-pulldown\demo\src\pages\home\home.html"*/`<ion-pull-down\n  (onInit)="Init()"\n  (onMoveStart)="MoveStart()"\n  (onMove)="Move()"\n  (onMoveDone)="MoveDone()"\n  (onCollapse)="Collapse()"\n  (onExpand)="Expand()"\n  (onMidPoint)="MidPoint()"\n  [mainContent]="content"\n  #pulldown>\n  <ion-content style="height: 100%">\n    <ion-card>\n      <ion-card-header>\n        Header\n      </ion-card-header>\n      <ion-card-content>\n        The British use the term "header", but the American term "head-shot" the English simply refuse to adopt.\n      </ion-card-content>\n    </ion-card>\n    <ion-card>\n      <ion-card-header>\n        Explore Nearby\n      </ion-card-header>\n\n      <ion-list>\n        <button ion-item>\n          <ion-icon name="cart" item-left></ion-icon>\n          Shopping\n        </button>\n\n        <button ion-item>\n          <ion-icon name="medical" item-left></ion-icon>\n          Hospital\n        </button>\n\n        <button ion-item>\n          <ion-icon name="cafe" item-left></ion-icon>\n          Cafe\n        </button>\n\n        <button ion-item>\n          <ion-icon name="paw" item-left></ion-icon>\n          Dog Park\n        </button>\n\n        <button ion-item>\n          <ion-icon name="beer" item-left></ion-icon>\n          Pub\n        </button>\n\n        <button ion-item>\n          <ion-icon name="planet" item-left></ion-icon>\n          Space\n        </button>\n\n        <button ion-item>\n          <ion-icon name="cart" item-left></ion-icon>\n          Shopping\n        </button>\n\n        <button ion-item>\n          <ion-icon name="medical" item-left></ion-icon>\n          Hospital\n        </button>\n\n        <button ion-item>\n          <ion-icon name="cafe" item-left></ion-icon>\n          Cafe\n        </button>\n\n        <button ion-item>\n          <ion-icon name="paw" item-left></ion-icon>\n          Dog Park\n        </button>\n\n        <button ion-item>\n          <ion-icon name="beer" item-left></ion-icon>\n          Pub\n        </button>\n\n        <button ion-item>\n          <ion-icon name="planet" item-left></ion-icon>\n          Space\n        </button>\n\n        <button ion-item>\n          <ion-icon name="cart" item-left></ion-icon>\n          Shopping\n        </button>\n\n        <button ion-item>\n          <ion-icon name="medical" item-left></ion-icon>\n          Hospital\n        </button>\n\n        <button ion-item>\n          <ion-icon name="cafe" item-left></ion-icon>\n          Cafe\n        </button>\n\n        <button ion-item>\n          <ion-icon name="paw" item-left></ion-icon>\n          Dog Park\n        </button>\n\n        <button ion-item>\n          <ion-icon name="beer" item-left></ion-icon>\n          Pub\n        </button>\n\n        <button ion-item>\n          <ion-icon name="planet" item-left></ion-icon>\n          Space\n        </button>\n\n      </ion-list>\n    </ion-card>\n    <ion-list inset>\n\n      <ion-item>\n        <ion-label>Username</ion-label>\n        <ion-input type="text"></ion-input>\n      </ion-item>\n\n      <ion-item>\n        <ion-label>Password</ion-label>\n        <ion-input type="password"></ion-input>\n      </ion-item>\n\n    </ion-list>\n  </ion-content>\n\n  <ion-navbar>\n    <ion-title>\n      Ionic Blank\n    </ion-title>\n  </ion-navbar>\n</ion-pull-down>\n\n<ion-content padding #content>\n  <h1>ion-pulldown</h1>\n  ion-pulldown is an Ionic (2+) component providing a curtain style pull down header.\n\n  The header is draggable, and snaps to one of three positions; closed, half way, and fully open.\n\n  <p>Install with</p>\n  <pre>\n    npm install --save ion-pulldown\n  </pre>\n\n  <p>ToDo: Documentation and Configurability!</p>\n\n  <p>\n    <button ion-button icon-only (click)="pulldown.collapse()">\n      <ion-icon name="arrow-up"></ion-icon>\n    </button>\n    <button ion-button  (click)="pulldown.midPoint()">\n      Middle\n    </button>\n    <button ion-button icon-only (click)="pulldown.expand()">\n      <ion-icon name="arrow-down"></ion-icon>\n    </button>\n  </p>\n\n  <p id="onMoveStart" class="hidden hideMe">onMoveStart</p>\n  <p id="onMove" class="hidden hideMe">onMove</p>\n  <p id="onMoveDone" class="hidden hideMe">onMoveDone</p>\n  <p id="onInit" class="hidden hideMe">onInit</p>\n  <p id="onCollapse" class="hidden hideMe">onCollapse</p>\n  <p id="onExpand" class="hidden hideMe">onExpand</p>\n  <p id="onMidPoint" class="hidden hideMe">onMidPoint</p>\n\n</ion-content>\n\n<ion-footer>\n  <ion-toolbar>\n    <ion-title>Footer</ion-title>\n  </ion-toolbar>\n</ion-footer>\n`/*ion-inline-end:"C:\Users\keyz\Code\ion-pulldown\demo\src\pages\home\home.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* NavController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["W" /* Renderer2 */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */]])
     ], HomePage);
     return HomePage;
 }());
@@ -267,7 +307,7 @@ var MyApp = (function () {
     MyApp = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\Users\keyz\Code\ion-pulldown\demo\src\app\app.html"*/`<ion-nav [root]="rootPage"></ion-nav>\n`/*ion-inline-end:"C:\Users\keyz\Code\ion-pulldown\demo\src\app\app.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
     ], MyApp);
     return MyApp;
 }());
@@ -359,8 +399,13 @@ var IonPullDownComponent = (function () {
     function IonPullDownComponent(platform, renderer) {
         this.platform = platform;
         this.renderer = renderer;
+        this.onInit = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
+        this.onMoveStart = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
         this.onMove = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
         this.onMoveDone = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
+        this.onCollapse = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
+        this.onExpand = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
+        this.onMidPoint = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
         if (!window.hasOwnProperty('Hammer')) {
             throw new Error('Hammer.js not found at window.Hammer!');
         }
@@ -383,15 +428,10 @@ var IonPullDownComponent = (function () {
         function handler(event) {
             switch (event.type) {
                 case 'panstart':
-                    component.renderer.removeStyle(component.headerRef.nativeElement, 'transition');
-                    component.renderer.removeStyle(component.headerRef.nativeElement, '-o-transition');
-                    component.renderer.removeStyle(component.headerRef.nativeElement, '-ms-transition');
-                    component.renderer.removeStyle(component.headerRef.nativeElement, '-moz-transition');
-                    component.renderer.removeStyle(component.headerRef.nativeElement, '-webkit-transition');
-                    component.renderer.removeStyle(component.content.getNativeElement(), 'display');
+                    component.startStyle();
                     component.content.resize();
                     component.mainContent.resize();
-                    component.onMove.emit();
+                    component.onMoveStart.emit();
                     break;
                 case 'pan':
                 case 'pan-up':
@@ -411,8 +451,7 @@ var IonPullDownComponent = (function () {
                     component.onMove.emit();
                     break;
                 case 'panend':
-                    component.renderer.removeStyle(component.headerRef.nativeElement, 'transition');
-                    component.renderer.setStyle(component.headerRef.nativeElement, 'transition', '300ms ease-in-out');
+                    component.endStyle();
                     if (component.currentPosY > (component.maxHeight * 0.8)) {
                         component.expand();
                     }
@@ -420,9 +459,7 @@ var IonPullDownComponent = (function () {
                         component.collapse();
                     }
                     else {
-                        component.currentPosY = component.maxHeight / 2;
-                        component.clearStyle();
-                        component.setStyle(component.currentPosY);
+                        component.midPoint();
                     }
                     component.previousPosY = component.currentPosY;
                     component.content.resize();
@@ -498,29 +535,62 @@ var IonPullDownComponent = (function () {
             this.renderer.setStyle(this.headerRef.nativeElement, '-webkit-transition', 'height 0');
         }
     };
+    IonPullDownComponent.prototype.startStyle = function () {
+        this.renderer.removeStyle(this.headerRef.nativeElement, 'transition');
+        this.renderer.removeStyle(this.headerRef.nativeElement, '-o-transition');
+        this.renderer.removeStyle(this.headerRef.nativeElement, '-ms-transition');
+        this.renderer.removeStyle(this.headerRef.nativeElement, '-moz-transition');
+        this.renderer.removeStyle(this.headerRef.nativeElement, '-webkit-transition');
+        this.renderer.removeStyle(this.content.getNativeElement(), 'display');
+    };
+    IonPullDownComponent.prototype.endStyle = function () {
+        this.renderer.removeStyle(this.headerRef.nativeElement, 'transition');
+        this.renderer.setStyle(this.headerRef.nativeElement, 'transition', '300ms ease-in-out');
+    };
     IonPullDownComponent.prototype.collapse = function (isInit) {
         if (isInit === void 0) { isInit = false; }
+        this.startStyle();
         this.currentPosY = 0;
         this.previousPosY = this.minHeight;
         this.clearStyle();
         this.setStyle(this.minHeight, true);
         this.renderer.setStyle(this.content.getNativeElement(), 'display', 'none');
+        this.endStyle();
         this.content.resize();
         this.mainContent.resize();
         if (!isInit) {
             this.onMove.emit();
+            this.onCollapse.emit();
         }
-        console.log('Collapse!');
+        else {
+            this.onInit.emit();
+        }
     };
     IonPullDownComponent.prototype.expand = function () {
+        this.content.resize();
+        this.startStyle();
+        this.mainContent.resize();
         this.currentPosY = this.maxHeight;
         this.previousPosY = this.maxHeight;
         this.clearStyle();
         this.setStyle(this.maxHeight, true);
+        this.endStyle();
         this.content.resize();
         this.mainContent.resize();
         this.onMove.emit();
-        console.log('Expand!');
+        this.onExpand.emit();
+    };
+    IonPullDownComponent.prototype.midPoint = function () {
+        this.startStyle();
+        this.currentPosY = this.maxHeight / 2;
+        this.previousPosY = this.maxHeight / 2;
+        this.clearStyle();
+        this.setStyle(this.currentPosY);
+        this.endStyle();
+        this.content.resize();
+        this.mainContent.resize();
+        this.onMove.emit();
+        this.onMidPoint.emit();
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["q" /* ContentChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* Content */]),
@@ -549,18 +619,38 @@ var IonPullDownComponent = (function () {
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["O" /* Output */])(),
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */])
+    ], IonPullDownComponent.prototype, "onInit", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["O" /* Output */])(),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */])
+    ], IonPullDownComponent.prototype, "onMoveStart", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["O" /* Output */])(),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */])
     ], IonPullDownComponent.prototype, "onMove", void 0);
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["O" /* Output */])(),
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */])
     ], IonPullDownComponent.prototype, "onMoveDone", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["O" /* Output */])(),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */])
+    ], IonPullDownComponent.prototype, "onCollapse", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["O" /* Output */])(),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */])
+    ], IonPullDownComponent.prototype, "onExpand", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["O" /* Output */])(),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */])
+    ], IonPullDownComponent.prototype, "onMidPoint", void 0);
     IonPullDownComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'ion-pull-down',
             changeDetection: __WEBPACK_IMPORTED_MODULE_0__angular_core__["i" /* ChangeDetectionStrategy */].OnPush,
-            template: "\n  <ion-header ionPulldownHeader #header>\n    <ng-content></ng-content>\n    <ion-pulldown-tab></ion-pulldown-tab>\n  </ion-header>\n  "
+            template: "\n        <ion-header ionPulldownHeader #header>\n            <ng-content></ng-content>\n            <ion-pulldown-tab></ion-pulldown-tab>\n        </ion-header>\n    "
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Platform */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["W" /* Renderer2 */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Platform */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["W" /* Renderer2 */]])
     ], IonPullDownComponent);
     return IonPullDownComponent;
 }());
