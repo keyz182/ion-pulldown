@@ -6,7 +6,6 @@ import { IonPulldownTabComponent } from './pulldown-tab';
 export declare class IonPullDownComponent implements OnInit {
     private platform;
     private renderer;
-    private elRef;
     content: Content;
     header: IonPulldownHeaderDirective;
     headerRef: ElementRef;
@@ -33,7 +32,7 @@ export declare class IonPullDownComponent implements OnInit {
     private previousPosY;
     private currentPosY;
     private hammer;
-    constructor(platform: Platform, renderer: Renderer2, elRef: ElementRef);
+    constructor(platform: Platform, renderer: Renderer2);
     ngOnInit(): void;
     getHeights(): void;
     computeHeights(isInit?: boolean): void;

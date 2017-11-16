@@ -58,7 +58,7 @@ export class IonPullDownComponent implements OnInit {
 
     private hammer;
 
-    constructor(private platform: Platform, private renderer: Renderer2, private elRef: ElementRef) {
+    constructor(private platform: Platform, private renderer: Renderer2) {
         if (!window.hasOwnProperty('Hammer')) {
             throw new Error('Hammer.js not found at window.Hammer!');
         } else {
@@ -138,12 +138,17 @@ export class IonPullDownComponent implements OnInit {
             }
         }
 
-        let hammer = new this.hammer(this.elRef.nativeElement, hammerOpts);
-        // let hammer = new this.hammer(this.tabRef.nativeElement, hammerOpts);
+        for(let el of this.headerRef.nativeElement.children){
+            // Ensure we don't add the pan to the content
+            if(el !== this.content.getNativeElement()) {
+                let hammer = new this.hammer(el, hammerOpts);
+                // let hammer = new this.hammer(this.tabRef.nativeElement, hammerOpts);
 
-        hammer.get('pan').set({threshold: 2});
+                hammer.get('pan').set({threshold: 2});
 
-        hammer.on('pan panstart panend pan-up pan-down', handler);
+                hammer.on('pan panstart panend pan-up pan-down', handler);
+            }
+        }
 
         this.updateUI(true);
     }

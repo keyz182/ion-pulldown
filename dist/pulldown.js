@@ -4,10 +4,9 @@ import 'rxjs/Rx';
 import { IonPulldownHeaderDirective } from './header-wrap';
 import { IonPulldownTabComponent } from './pulldown-tab';
 var IonPullDownComponent = (function () {
-    function IonPullDownComponent(platform, renderer, elRef) {
+    function IonPullDownComponent(platform, renderer) {
         this.platform = platform;
         this.renderer = renderer;
-        this.elRef = elRef;
         this.onInit = new EventEmitter();
         this.onMoveStart = new EventEmitter();
         this.onMove = new EventEmitter();
@@ -83,10 +82,16 @@ var IonPullDownComponent = (function () {
                     break;
             }
         }
-        var hammer = new this.hammer(this.elRef.nativeElement, hammerOpts);
-        // let hammer = new this.hammer(this.tabRef.nativeElement, hammerOpts);
-        hammer.get('pan').set({ threshold: 2 });
-        hammer.on('pan panstart panend pan-up pan-down', handler);
+        for (var _i = 0, _a = this.headerRef.nativeElement.children; _i < _a.length; _i++) {
+            var el = _a[_i];
+            // Ensure we don't add the pan to the content
+            if (el !== this.content.getNativeElement()) {
+                var hammer = new this.hammer(el, hammerOpts);
+                // let hammer = new this.hammer(this.tabRef.nativeElement, hammerOpts);
+                hammer.get('pan').set({ threshold: 2 });
+                hammer.on('pan panstart panend pan-up pan-down', handler);
+            }
+        }
         this.updateUI(true);
     };
     IonPullDownComponent.prototype.getHeights = function () {
@@ -220,7 +225,6 @@ IonPullDownComponent.decorators = [
 IonPullDownComponent.ctorParameters = function () { return [
     { type: Platform, },
     { type: Renderer2, },
-    { type: ElementRef, },
 ]; };
 IonPullDownComponent.propDecorators = {
     'content': [{ type: ContentChild, args: [Content,] },],

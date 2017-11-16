@@ -396,10 +396,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var IonPullDownComponent = (function () {
-    function IonPullDownComponent(platform, renderer, elRef) {
+    function IonPullDownComponent(platform, renderer) {
         this.platform = platform;
         this.renderer = renderer;
-        this.elRef = elRef;
         this.onInit = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
         this.onMoveStart = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
         this.onMove = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
@@ -475,10 +474,16 @@ var IonPullDownComponent = (function () {
                     break;
             }
         }
-        var hammer = new this.hammer(this.elRef.nativeElement, hammerOpts);
-        // let hammer = new this.hammer(this.tabRef.nativeElement, hammerOpts);
-        hammer.get('pan').set({ threshold: 2 });
-        hammer.on('pan panstart panend pan-up pan-down', handler);
+        for (var _i = 0, _a = this.headerRef.nativeElement.children; _i < _a.length; _i++) {
+            var el = _a[_i];
+            // Ensure we don't add the pan to the content
+            if (el !== this.content.getNativeElement()) {
+                var hammer = new this.hammer(el, hammerOpts);
+                // let hammer = new this.hammer(this.tabRef.nativeElement, hammerOpts);
+                hammer.get('pan').set({ threshold: 2 });
+                hammer.on('pan panstart panend pan-up pan-down', handler);
+            }
+        }
         this.updateUI(true);
     };
     IonPullDownComponent.prototype.getHeights = function () {
@@ -656,7 +661,7 @@ var IonPullDownComponent = (function () {
             changeDetection: __WEBPACK_IMPORTED_MODULE_0__angular_core__["i" /* ChangeDetectionStrategy */].OnPush,
             template: "\n        <ion-header ionPulldownHeader #header>\n            <ng-content></ng-content>\n            <ion-pulldown-tab></ion-pulldown-tab>\n        </ion-header>\n    "
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Platform */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["W" /* Renderer2 */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["t" /* ElementRef */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Platform */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["W" /* Renderer2 */]])
     ], IonPullDownComponent);
     return IonPullDownComponent;
 }());
