@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, Output, ViewChild, Renderer2, ContentChild } from '@angular/core';
-import { Platform, Content } from 'ionic-angular';
+import { ChangeDetectionStrategy, Component, ContentChild, ElementRef, EventEmitter, Input, Output, Renderer2, ViewChild } from '@angular/core';
+import { Content, Platform } from 'ionic-angular';
 import 'rxjs/Rx';
 import { IonPulldownHeaderDirective } from './header-wrap';
 import { IonPulldownTabComponent } from './pulldown-tab';
@@ -7,8 +7,13 @@ var IonPullDownComponent = (function () {
     function IonPullDownComponent(platform, renderer) {
         this.platform = platform;
         this.renderer = renderer;
+        this.onInit = new EventEmitter();
+        this.onMoveStart = new EventEmitter();
         this.onMove = new EventEmitter();
         this.onMoveDone = new EventEmitter();
+        this.onCollapse = new EventEmitter();
+        this.onExpand = new EventEmitter();
+        this.onMidPoint = new EventEmitter();
         if (!window.hasOwnProperty('Hammer')) {
             throw new Error('Hammer.js not found at window.Hammer!');
         }
@@ -31,15 +36,10 @@ var IonPullDownComponent = (function () {
         function handler(event) {
             switch (event.type) {
                 case 'panstart':
-                    component.renderer.removeStyle(component.headerRef.nativeElement, 'transition');
-                    component.renderer.removeStyle(component.headerRef.nativeElement, '-o-transition');
-                    component.renderer.removeStyle(component.headerRef.nativeElement, '-ms-transition');
-                    component.renderer.removeStyle(component.headerRef.nativeElement, '-moz-transition');
-                    component.renderer.removeStyle(component.headerRef.nativeElement, '-webkit-transition');
-                    component.renderer.removeStyle(component.content.getNativeElement(), 'display');
+                    component.startStyle();
                     component.content.resize();
                     component.mainContent.resize();
-                    component.onMove.emit();
+                    component.onMoveStart.emit();
                     break;
                 case 'pan':
                 case 'pan-up':
@@ -59,8 +59,7 @@ var IonPullDownComponent = (function () {
                     component.onMove.emit();
                     break;
                 case 'panend':
-                    component.renderer.removeStyle(component.headerRef.nativeElement, 'transition');
-                    component.renderer.setStyle(component.headerRef.nativeElement, 'transition', '300ms ease-in-out');
+                    component.endStyle();
                     if (component.currentPosY > (component.maxHeight * 0.8)) {
                         component.expand();
                     }
@@ -68,9 +67,7 @@ var IonPullDownComponent = (function () {
                         component.collapse();
                     }
                     else {
-                        component.currentPosY = component.maxHeight / 2;
-                        component.clearStyle();
-                        component.setStyle(component.currentPosY);
+                        component.midPoint();
                     }
                     component.previousPosY = component.currentPosY;
                     component.content.resize();
@@ -146,29 +143,62 @@ var IonPullDownComponent = (function () {
             this.renderer.setStyle(this.headerRef.nativeElement, '-webkit-transition', 'height 0');
         }
     };
+    IonPullDownComponent.prototype.startStyle = function () {
+        this.renderer.removeStyle(this.headerRef.nativeElement, 'transition');
+        this.renderer.removeStyle(this.headerRef.nativeElement, '-o-transition');
+        this.renderer.removeStyle(this.headerRef.nativeElement, '-ms-transition');
+        this.renderer.removeStyle(this.headerRef.nativeElement, '-moz-transition');
+        this.renderer.removeStyle(this.headerRef.nativeElement, '-webkit-transition');
+        this.renderer.removeStyle(this.content.getNativeElement(), 'display');
+    };
+    IonPullDownComponent.prototype.endStyle = function () {
+        this.renderer.removeStyle(this.headerRef.nativeElement, 'transition');
+        this.renderer.setStyle(this.headerRef.nativeElement, 'transition', '300ms ease-in-out');
+    };
     IonPullDownComponent.prototype.collapse = function (isInit) {
         if (isInit === void 0) { isInit = false; }
+        this.startStyle();
         this.currentPosY = 0;
         this.previousPosY = this.minHeight;
         this.clearStyle();
         this.setStyle(this.minHeight, true);
         this.renderer.setStyle(this.content.getNativeElement(), 'display', 'none');
+        this.endStyle();
         this.content.resize();
         this.mainContent.resize();
         if (!isInit) {
             this.onMove.emit();
+            this.onCollapse.emit();
         }
-        console.log('Collapse!');
+        else {
+            this.onInit.emit();
+        }
     };
     IonPullDownComponent.prototype.expand = function () {
+        this.content.resize();
+        this.startStyle();
+        this.mainContent.resize();
         this.currentPosY = this.maxHeight;
         this.previousPosY = this.maxHeight;
         this.clearStyle();
         this.setStyle(this.maxHeight, true);
+        this.endStyle();
         this.content.resize();
         this.mainContent.resize();
         this.onMove.emit();
-        console.log('Expand!');
+        this.onExpand.emit();
+    };
+    IonPullDownComponent.prototype.midPoint = function () {
+        this.startStyle();
+        this.currentPosY = this.maxHeight / 2;
+        this.previousPosY = this.maxHeight / 2;
+        this.clearStyle();
+        this.setStyle(this.currentPosY);
+        this.endStyle();
+        this.content.resize();
+        this.mainContent.resize();
+        this.onMove.emit();
+        this.onMidPoint.emit();
     };
     return IonPullDownComponent;
 }());
@@ -177,7 +207,7 @@ IonPullDownComponent.decorators = [
     { type: Component, args: [{
                 selector: 'ion-pull-down',
                 changeDetection: ChangeDetectionStrategy.OnPush,
-                template: "\n  <ion-header ionPulldownHeader #header>\n    <ng-content></ng-content>\n    <ion-pulldown-tab></ion-pulldown-tab>\n  </ion-header>\n  "
+                template: "\n        <ion-header ionPulldownHeader #header>\n            <ng-content></ng-content>\n            <ion-pulldown-tab></ion-pulldown-tab>\n        </ion-header>\n    "
             },] },
 ];
 /** @nocollapse */
@@ -192,7 +222,12 @@ IonPullDownComponent.propDecorators = {
     'tab': [{ type: ViewChild, args: [IonPulldownTabComponent,] },],
     'tabRef': [{ type: ViewChild, args: [IonPulldownTabComponent, { read: ElementRef },] },],
     'mainContent': [{ type: Input },],
+    'onInit': [{ type: Output },],
+    'onMoveStart': [{ type: Output },],
     'onMove': [{ type: Output },],
     'onMoveDone': [{ type: Output },],
+    'onCollapse': [{ type: Output },],
+    'onExpand': [{ type: Output },],
+    'onMidPoint': [{ type: Output },],
 };
 //# sourceMappingURL=pulldown.js.map

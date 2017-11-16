@@ -1,5 +1,5 @@
-import { ElementRef, EventEmitter, Renderer2, OnInit } from '@angular/core';
-import { Platform, Content } from 'ionic-angular';
+import { ElementRef, EventEmitter, OnInit, Renderer2 } from '@angular/core';
+import { Content, Platform } from 'ionic-angular';
 import 'rxjs/Rx';
 import { IonPulldownHeaderDirective } from './header-wrap';
 import { IonPulldownTabComponent } from './pulldown-tab';
@@ -12,8 +12,13 @@ export declare class IonPullDownComponent implements OnInit {
     tab: IonPulldownTabComponent;
     tabRef: ElementRef;
     mainContent: Content;
+    onInit: EventEmitter<any>;
+    onMoveStart: EventEmitter<any>;
     onMove: EventEmitter<any>;
     onMoveDone: EventEmitter<any>;
+    onCollapse: EventEmitter<any>;
+    onExpand: EventEmitter<any>;
+    onMidPoint: EventEmitter<any>;
     private defaultHeight;
     private maxHeight;
     private currentHeight;
@@ -34,6 +39,9 @@ export declare class IonPullDownComponent implements OnInit {
     updateUI(isInit?: boolean): void;
     clearStyle(clearTransition?: boolean): void;
     setStyle(height: number, transition?: boolean): void;
+    startStyle(): void;
+    endStyle(): void;
     collapse(isInit?: boolean): void;
     expand(): void;
+    midPoint(): void;
 }
