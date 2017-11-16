@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/ion-pulldown.svg)](https://badge.fury.io/js/ion-pulldown)
+
 # ion-pulldown for Ionic 3 and Angular 4
 
 *[Heavily based on Ariel Faur's pullup library](http://arielfaur.github.io/ionic-pullup)*
